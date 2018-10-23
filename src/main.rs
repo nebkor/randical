@@ -4,7 +4,7 @@ use clap::{App, Arg, ArgMatches};
 
 use rand::prelude::*;
 
-const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+const VERSION: &'static str = "1";
 const DEFAULT_NUM_VALS: usize = 1;
 
 fn get_args() -> ArgMatches<'static> {
