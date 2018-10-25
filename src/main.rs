@@ -1,10 +1,13 @@
+extern crate clap;
+extern crate rand;
+
 use std::process::exit;
 
 use clap::{App, Arg, ArgMatches};
 
 use rand::prelude::*;
 
-const VERSION: &'static str = "1";
+const VERSION: &str = "1";
 const DEFAULT_NUM_VALS: usize = 1;
 
 fn get_args() -> ArgMatches<'static> {
@@ -38,23 +41,18 @@ fn get_args() -> ArgMatches<'static> {
 }
 
 fn print_bool(b: &mut ThreadRng) {
-    let t: usize;
-    if b.gen() {
-        t = 1;
-    } else {
-        t = 0;
-    }
+    let t = if b.gen() { 1 } else { 0 };
     println!("{}", t);
 }
 
-fn get_generator(args: &ArgMatches) -> Box<FnMut() -> ()> {
+fn get_generator(args: &ArgMatches) -> Box<dyn FnMut() -> ()> {
     let mut rng = thread_rng();
 
     match args.value_of("TYPE").unwrap_or("b") {
-        "f" => return Box::new(move || println!("{}", rng.gen::<f64>())),
-        "u" => return Box::new(move || println!("{}", rng.gen::<u64>())),
-        "s" => return Box::new(move || println!("{}", rng.gen::<i64>())),
-        _ => return Box::new(move || print_bool(&mut rng)),
+        "f" => Box::new(move || println!("{}", rng.gen::<f64>())),
+        "u" => Box::new(move || println!("{}", rng.gen::<u64>())),
+        "s" => Box::new(move || println!("{}", rng.gen::<i64>())),
+        _ => Box::new(move || print_bool(&mut rng)),
     }
 }
 
@@ -68,12 +66,10 @@ fn main() {
             .unwrap()
             .parse()
             .unwrap_or(DEFAULT_NUM_VALS)
+    } else if do_exit {
+        0
     } else {
-        if do_exit {
-            0
-        } else {
-            DEFAULT_NUM_VALS
-        }
+        DEFAULT_NUM_VALS
     };
 
     let mut gen = get_generator(&args);
