@@ -24,4 +24,9 @@ Cool.
 
 ## What version is randical now?
 
-See the ```VERSION``` file.
+Canonically, see the ```VERSION``` file. Heretically, now that there have been
+at least three releases, the version string in the ```Cargo.toml``` file will
+always be of the form "1.6.x", where *x* is at least one digit long, starting
+with "1". Each subsequent release will append the next digit of *phi* to
+*x*. The number of releases can be calculated by counting the number of digits
+in *x* and adding 2 to that.
