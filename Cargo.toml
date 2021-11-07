@@ -1,8 +1,8 @@
 [package]
 name = "randical"
-version = "1.6.18"
+version = "1.6.180"
 authors = ["Joe Ardent <code@ardent.nebcorp.com>"]
-edition = "2018"
+edition = "2021"
 
 description = "A simple UNIX commandline utility to generate sequences of random values of different types."
 
@@ -21,4 +21,4 @@ maintenance = { status = "actively-developed" }
 [dependencies]
 rand = "0.8"
 clap = "2"
-uuid = "0.8"
+uuid = { version = "0.8", default-features = false }
