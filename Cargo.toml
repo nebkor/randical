@@ -1,6 +1,6 @@
 [package]
 name = "randical"
-version = "1.6.1"
+version = "1.6.18"
 authors = ["Joe Ardent <code@ardent.nebcorp.com>"]
 edition = "2018"
 
@@ -19,5 +19,6 @@ license = "GPL-3.0-or-later"
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-rand = "0.7"
+rand = "0.8"
 clap = "2"
+uuid = "0.8"

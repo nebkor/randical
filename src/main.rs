@@ -1,10 +1,10 @@
 use std::process::exit;
 
 use clap::{App, Arg, ArgMatches};
-
 use rand::prelude::*;
+use uuid::{Builder, Variant, Version};
 
-const VERSION: &str = "1.61";
+const VERSION: &str = include_str!("../VERSION");
 
 const DEFAULT_NUM_VALS: usize = 1;
 
@@ -33,7 +33,7 @@ fn get_args() -> ArgMatches<'static> {
                 .short("t")
                 .long("type")
                 .takes_value(true)
-                .help("Type of random value to print. Defaults to 'bool'.\nPossible values are 'b'ool, 'f'loat64, 'u'nsigned64, and 's'igned64"),
+                .help("Type of random value to print. Defaults to 'bool'.\nPossible values are 'b'ool, 'f'loat64, 'U'UIDv4, 'u'nsigned64, and 's'igned64"),
         )
         .arg(
             Arg::with_name("BULE")
@@ -89,6 +89,16 @@ fn print_bool<'a>(b: &'a mut ThreadRng, args: &'a ArgMatches) {
     println!("{}", t);
 }
 
+// doing this by hand so we don't need to use the `getrandom` crate
+fn print_uuidv4(rng: &mut ThreadRng) {
+    let random_bytes = rng.gen();
+    let uuid = Builder::from_bytes(random_bytes)
+        .set_variant(Variant::RFC4122)
+        .set_version(Version::Random)
+        .build();
+    println!("{}", uuid.to_hyphenated());
+}
+
 fn get_generator<'a>(args: &'a ArgMatches) -> Box<(dyn FnMut() + 'a)> {
     let mut rng = thread_rng();
 
@@ -97,6 +107,7 @@ fn get_generator<'a>(args: &'a ArgMatches) -> Box<(dyn FnMut() + 'a)> {
         "u" => Box::new(move || println!("{}", rng.gen::<u64>())),
         "s" => Box::new(move || println!("{}", rng.gen::<i64>())),
         "b" => Box::new(move || print_bool(&mut rng, args)),
+        "U" => Box::new(move || print_uuidv4(&mut rng)),
         _ => panic!(),
     }
 }
