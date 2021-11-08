@@ -32,41 +32,23 @@ OPTIONS:
 
 Some examples:
 
-``` text
-$ randical -n 5      # print out five bools
+```text
+$ randical -n 3      # print out five bools
 Bogus.
 Radical!
-Radical!
-Bogus.
 Radical!
 
-$ randical -t u -n 5 # print out five 64-bit unsigned integers
+$ randical -t u 	# 64-bit unsigned integers
 5787939472744910229
-3687549088276320089
-5895623703396652260
-1132852924593482146
-15071579321211626745
 
-$ randical -n 5 -t s # print out five 64-bit signed integers
+$ randical -t s 	# 64-bit signed integers
 -3655402238002064604
-7349054970592683859
--4119878930309679607
-3670604787450187343
-7596830659839314972
 
-$ randical -n 5 -t f # print out five 64-bit floating-point numbers in [0,1)
+$ randical -t f 	# floating-point numbers from [0,1)
 0.603028217883161
-0.004087838255832366
-0.07830762695977944
-0.8930433328568959
-0.6985875655193886
 
-$ randical -n 5 -t U # print out five v4 UUIDs
+$ randical -t U 	# v4 UUIDs
 0237bf92-a629-440a-a1b5-ae32741b8ebd
-a88a5c2a-88c5-4b48-849b-656831eb7fc5
-56ac8f8c-4e67-4418-bf0c-84a5442804c4
-c82162d6-80e5-4d3e-819b-b350dba74d5e
-d8194b0b-246f-4c0a-8897-cb9cdee27a99
 
 $ randical -e         # exit with status 0 or 1, with equal probability
 $ echo $?
@@ -76,3 +58,37 @@ $ echo $?
 0
 $
 ```
+
+You can use it to do some simple modeling in a shell one-liners, like so:
+
+ - simulate a fair coin toss:
+
+```text
+$ for i in {1..10} ; do (randical -e && echo heads) || echo tails ; done
+heads
+heads
+tails
+tails
+heads
+heads
+tails
+heads
+heads
+heads
+```
+
+ - simulate an *unfair* coin toss:
+
+ ```text
+$ for n in $(randical -n 10 -t f) ; do echo -n "unfair coin is " ; ((($n < 0.25)) && echo -n tails) || echo -n heads ; echo " ($n)" ; done
+unfair coin is tails (0.08358173070875441)
+unfair coin is heads (0.6536652844106665)
+unfair coin is heads (0.25506794504375785)
+unfair coin is heads (0.8781122125361713)
+unfair coin is heads (0.3413074383739916)
+unfair coin is heads (0.9068801316813913)
+unfair coin is heads (0.6210935828659315)
+unfair coin is heads (0.834424540129461)
+unfair coin is heads (0.5440078767522896)
+unfair coin is heads (0.615928198757337)
+ ```
