@@ -5,7 +5,7 @@ random values of varying types, with uniform distribution. See below for usage a
 
 
 ```text
-Radical Random Value Generator 1.6180
+Radical Random Value Generator 1.61803
 
 Generates arbitrary numbers of uniformly distributed random values.
 
@@ -92,3 +92,25 @@ unfair coin is heads (0.834424540129461)
 unfair coin is heads (0.5440078767522896)
 unfair coin is heads (0.615928198757337)
  ```
+
+ - simulate a *Sliding Doors*-style garden of forking paths alternate timeline for Ferris Bueller's
+   presence or absence on that fateful day:
+
+```text
+$ for i in {1..5} ; do echo "----" ; echo "Bueller? Bueller?" ; randical --buel ; done
+----
+Bueller? Bueller?
+Here.
+----
+Bueller? Bueller?
+Um, he's sick. My best friend's sister's boyfriend's brother's girlfriend heard from this guy who knows this kid who's going with the girl who saw Ferris pass out at 31 Flavors last night. I guess it's pretty serious.
+----
+Bueller? Bueller?
+Here.
+----
+Bueller? Bueller?
+Um, he's sick. My best friend's sister's boyfriend's brother's girlfriend heard from this guy who knows this kid who's going with the girl who saw Ferris pass out at 31 Flavors last night. I guess it's pretty serious.
+----
+Bueller? Bueller?
+Um, he's sick. My best friend's sister's boyfriend's brother's girlfriend heard from this guy who knows this kid who's going with the girl who saw Ferris pass out at 31 Flavors last night. I guess it's pretty serious.
+```
