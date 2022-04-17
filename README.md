@@ -5,7 +5,7 @@ random values of varying types, with uniform distribution. See below for usage a
 
 
 ```text
-Radical Random Value Generator 1.61803
+Radical Random Value Generator 1.618033
 
 Generates arbitrary numbers of uniformly distributed random values.
 
@@ -27,13 +27,14 @@ FLAGS:
 OPTIONS:
     -n, --num-vals <NUM_VALS>    Number of random values to print out. Defaults to 1.
     -t, --type <TYPE>            Type of random value to print. Defaults to 'bool'.
-                                 Possible values are 'b'ool, 'f'loat64, 'U'UIDv4, 'u'nsigned64, and 's'igned64
+                                 Possible values are 'b'ool, 'f'loat64, 'U'UIDv4, 'u'nsigned64, 's'igned64, and 'k'suid
+                                 with millisecond precision.
 ```
 
 Some examples:
 
 ```text
-$ randical -n 3      # print out five bools
+$ randical -n 3     # print out three bools
 Bogus.
 Radical!
 Radical!
@@ -50,13 +51,16 @@ $ randical -t f 	# floating-point numbers from [0,1)
 $ randical -t U 	# v4 UUIDs
 0237bf92-a629-440a-a1b5-ae32741b8ebd
 
-$ randical -e         # exit with status 0 or 1, with equal probability
+$ randical -e       # exit with status 0 or 1, with equal probability
 $ echo $?
 1
 $ randical -e
 $ echo $?
 0
-$
+$ randical -t k -n 3 # print out three "K-sorted UID"s; see https://segment.com/blog/a-brief-history-of-the-uuid/
+27wOG5VmO0vOzDsk66ELjzDa20X
+27wOG5WdjugQa5HTnGr9IABktzF
+27wOG5WK0MgZ49lrBUNWGe6XDFI
 ```
 
 You can use it to do some simple modeling in a shell one-liners, like so:

@@ -1,6 +1,6 @@
 [package]
 name = "randical"
-version = "1.6.1803"
+version = "1.6.18033"
 authors = ["Joe Ardent <code@ardent.nebcorp.com>"]
 edition = "2021"
 
@@ -22,3 +22,4 @@ maintenance = { status = "actively-developed" }
 rand = "0.8"
 clap = "2"
 uuid = { version = "0.8", default-features = false }
+svix-ksuid = "0.6"

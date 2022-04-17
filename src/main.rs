@@ -2,6 +2,7 @@ use std::process::exit;
 
 use clap::{App, Arg, ArgMatches};
 use rand::prelude::*;
+use svix_ksuid::{KsuidLike, KsuidMs};
 use uuid::{Builder, Variant, Version};
 
 const VERSION: &str = include_str!("../VERSION");
@@ -33,7 +34,7 @@ fn get_args() -> ArgMatches<'static> {
                 .short("t")
                 .long("type")
                 .takes_value(true)
-                .help("Type of random value to print. Defaults to 'bool'.\nPossible values are 'b'ool, 'f'loat64, 'U'UIDv4, 'u'nsigned64, and 's'igned64"),
+                .help("Type of random value to print. Defaults to 'bool'.\nPossible values are 'b'ool, 'f'loat64, 'U'UIDv4, 'u'nsigned64, 's'igned64, and 'k'suid with millisecond precision."),
         )
         .arg(
             Arg::with_name("BULE")
@@ -108,6 +109,7 @@ fn get_generator<'a>(args: &'a ArgMatches) -> Box<(dyn FnMut() + 'a)> {
         "s" => Box::new(move || println!("{}", rng.gen::<i64>())),
         "b" => Box::new(move || print_bool(&mut rng, args)),
         "U" => Box::new(move || print_uuidv4(&mut rng)),
+        "k" => Box::new(move || println!("{}", KsuidMs::new(None, None).to_string())),
         _ => panic!(),
     }
 }
